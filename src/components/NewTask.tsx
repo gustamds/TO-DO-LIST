@@ -1,43 +1,69 @@
-import styles from './NewTask.module.css';
+import styles from "./NewTask.module.css";
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
-import { PlusCircle } from 'phosphor-react';
-import { ChangeEvent, useState } from 'react';
+import { PlusCircle } from "phosphor-react";
+import { ChangeEvent, useState, KeyboardEvent } from "react";
+import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 
-interface NewTaskProps{
-    setTaskList: React.Dispatch<React.SetStateAction<Array<{id: string; name: string}>>>;
-    taskList: Array<{id: string; name: string}>;
+interface NewTaskProps {
+  setTaskList: React.Dispatch<
+    React.SetStateAction<Array<{ id: string; name: string }>>
+  >;
+  taskList: Array<{ id: string; name: string }>;
 }
 
-export function NewTask({ setTaskList, taskList }: NewTaskProps){
-    const [taskName, setTaskName] = useState('');
+export function NewTask({ setTaskList, taskList }: NewTaskProps) {
+  const [taskName, setTaskName] = useState("");
 
-    function handleChangeTaskName(event : ChangeEvent<HTMLInputElement>){
-        setTaskName(event.target.value)
+  function handleChangeTaskName(event: ChangeEvent<HTMLInputElement>) {
+    setTaskName(event.target.value);
+  }
+
+  function createNewTask() {
+    if (taskName.trim() === "") {
+      return;
     }
 
-    function createNewTask(){
-        setTaskList([...taskList,{
-            id: uuidv4().toString(),
-            name: taskName,
-        }])
-        
-        setTaskName('');
-    }
+    setTaskList([
+      ...taskList,
+      {
+        id: uuidv4().toString(),
+        name: taskName,
+      },
+    ]);
 
-    return(
-        <div className={styles.contentNewTask}>
-            <input 
-            className={styles.contentNewTaskInput} 
-            type="text" 
-            placeholder='Adicione uma nova tarefa' 
-            onChange={handleChangeTaskName} 
-            value={taskName}
-            />
-            <button className={styles.contentNewTaskButton} onClick={createNewTask} disabled={!taskName}>Criar
-            <PlusCircle size={16} color="#F2F2F2" weight="regular"/>
-            </button>
-        </div>
-    )
+    setTaskName("");
+  }
+
+  function handleKeyPress(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter") {
+      createNewTask();
+    }
+  }
+
+  return (
+    <div className={styles.contentNewTask}>
+      <InputGroup>
+        <Input
+          className={styles.contentNewTaskInput}
+          type="text"
+          placeholder="Add a new task"
+          onChange={handleChangeTaskName}
+          onKeyPress={handleKeyPress}
+          value={taskName}
+        />
+        <InputRightElement className={styles.contentNewTaskButtonRightElement}>
+          <Button
+            className={styles.contentNewTaskButton}
+            onClick={createNewTask}
+            isDisabled={!taskName}
+            rightIcon={<PlusCircle size={16} />}
+          >
+            Add Task
+          </Button>
+        </InputRightElement>
+      </InputGroup>
+    </div>
+  );
 }

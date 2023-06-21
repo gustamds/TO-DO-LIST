@@ -6,7 +6,7 @@ body{
     display: flex;
     flex-flow: column wrap;
     gap: 24px;
-    width: 736px;
+    width: 100%;
     margin: 0 auto;
     margin-top: 64px;
 }
@@ -16,7 +16,7 @@ body{
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: flex-end;
-    width: 736px;
+    width: 100%;
     height: 19px;
     margin: 0 auto;
     margin-top: 64px;
@@ -61,11 +61,11 @@ body{
 
 .contentTaskStatusDoneCounter{
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row;
     justify-content: center;
     align-items: center;
     padding: 2px 8px;
-    width: 52px;
+    width: 80px;
     height: 19px;
     background: #333333;
     border-radius: 999px;
