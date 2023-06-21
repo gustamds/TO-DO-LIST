@@ -15,27 +15,6 @@ export function Home() {
   const [taskList, setTaskList] = useState<Task[]>([]);
   const [selectedTask, setSelectedTask] = useState<string[]>([]);
 
-  useEffect(() => {
-    const storedTaskList = localStorage.getItem("taskList");
-    const storedSelectedTask = localStorage.getItem("selectedTask");
-
-    if (storedTaskList) {
-      setTaskList(JSON.parse(storedTaskList));
-    }
-
-    if (storedSelectedTask) {
-      setSelectedTask(JSON.parse(storedSelectedTask));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("taskList", JSON.stringify(taskList));
-  }, [taskList]);
-
-  useEffect(() => {
-    localStorage.setItem("selectedTask", JSON.stringify(selectedTask));
-  }, [selectedTask]);
-
   return (
     <>
       <header className={styles.headerBackground}>
