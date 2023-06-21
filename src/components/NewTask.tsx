@@ -1,16 +1,18 @@
 import styles from "./NewTask.module.css";
-
 import { v4 as uuidv4 } from "uuid";
-
 import { PlusCircle } from "phosphor-react";
 import { ChangeEvent, useState, KeyboardEvent } from "react";
 import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 
+interface Task {
+  id: string;
+  name: string;
+  checked: boolean; // Incluída a propriedade 'checked'
+}
+
 interface NewTaskProps {
-  setTaskList: React.Dispatch<
-    React.SetStateAction<Array<{ id: string; name: string }>>
-  >;
-  taskList: Array<{ id: string; name: string }>;
+  setTaskList: React.Dispatch<React.SetStateAction<Task[]>>;
+  taskList: Task[];
 }
 
 export function NewTask({ setTaskList, taskList }: NewTaskProps) {
@@ -30,6 +32,7 @@ export function NewTask({ setTaskList, taskList }: NewTaskProps) {
       {
         id: uuidv4().toString(),
         name: taskName,
+        checked: false,
       },
     ]);
 
