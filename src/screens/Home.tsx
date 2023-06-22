@@ -1,8 +1,8 @@
 import styles from "./Home.module.css";
-import { useState, useEffect } from 'react';
-import Logo from '../assets/Logo.png';
-import { NewTask } from '../components/NewTask';
-import { TaskStatus } from '../components/TaskStatus';
+import { useState } from "react";
+import Logo from "../assets/Logo.png";
+import { NewTask } from "../components/NewTask";
+import { TaskStatus } from "../components/TaskStatus";
 import { Tasks } from "../components/Tasks";
 
 interface Task {
@@ -22,7 +22,7 @@ export function Home() {
           <img className={styles.imgLogo} src={Logo} alt="Logo" />
         </div>
       </header>
-      <body className={styles.bodyBackground}>
+      <div className={styles.bodyBackground}>
         <div className="App">
           <NewTask setTaskList={setTaskList} taskList={taskList} />
           <TaskStatus selectedTask={selectedTask} taskList={taskList} />
@@ -33,7 +33,7 @@ export function Home() {
             taskList={taskList}
           />
         </div>
-      </body>
+      </div>
     </>
   );
 }

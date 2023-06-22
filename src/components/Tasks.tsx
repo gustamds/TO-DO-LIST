@@ -16,6 +16,7 @@ import {
   useDisclosure,
   ModalOverlay,
 } from "@chakra-ui/react";
+import { TaskModal } from "./TaskModal";
 
 interface TaskProps {
   taskList: Array<{ id: string; name: string; checked: boolean }>;
@@ -61,7 +62,7 @@ export function Tasks({
     localStorage.setItem("selectedTask", JSON.stringify(selectedTask));
   }, [selectedTask]);
 
-  function handleTaskStatus(taskId: string) {
+  function ToggleTaskStatus(taskId: string) {
     if (selectedTask.includes(taskId)) {
       setSelectedTask(selectedTask.filter((item) => item !== taskId));
     } else {
@@ -119,7 +120,7 @@ export function Tasks({
         });
         return;
       }
-  
+
       const updatedTaskList = taskList.map((task) => {
         if (task.id === editedTask.id) {
           return {
@@ -157,7 +158,7 @@ export function Tasks({
                       ? styles.taskContentButtonClick
                       : styles.taskContentButton
                   }
-                  onClick={() => handleTaskStatus(task.id)}
+                  onClick={() => ToggleTaskStatus(task.id)}
                 >
                   <Check
                     className={
@@ -169,9 +170,11 @@ export function Tasks({
                 {isEditing ? (
                   <>
                     <p
-                      className={
-                        `${isChecked ? styles.taskContentPActive : styles.taskContentP} ${isEditing ? styles.editing : ''}`
-                      }
+                      className={`${
+                        isChecked
+                          ? styles.taskContentPActive
+                          : styles.taskContentP
+                      } ${isEditing ? styles.editing : ""}`}
                       contentEditable
                       onBlur={handleSaveTask}
                       suppressContentEditableWarning
@@ -192,7 +195,7 @@ export function Tasks({
                       {task.name}
                     </p>
                     <CheckSquare
-                      size={20}
+                      size={24}
                       color="#808080"
                       weight="regular"
                       onClick={() => handleEditTask(task.id, task.name)}
@@ -212,9 +215,9 @@ export function Tasks({
                     >
                       {task.name}
                     </p>
-                  
+
                     <NotePencil
-                      size={20}
+                      size={24}
                       color="#808080"
                       weight="regular"
                       onClick={() => handleEditTask(task.id, task.name)}
@@ -225,7 +228,7 @@ export function Tasks({
                   </>
                 )}
                 <Trash
-                  size={20}
+                  size={24}
                   color="#808080"
                   weight="regular"
                   onClick={() => deleteTask(task.id)}
@@ -241,29 +244,11 @@ export function Tasks({
         <EmptyTask />
       )}
 
-      <Modal isCentered isOpen={isOpen} size={"sm"} onClose={onClose}>
-        <ModalOverlay
-          bg="blackAlpha.300"
-          backdropFilter="blur(10px) hue-rotate(90deg)"
-        />
-        <ModalContent background="#262626">
-          <ModalHeader color="white">Are you sure about that?</ModalHeader>
-          <ModalCloseButton color="white"/>
-          <ModalBody>
-            <Text color="white">
-              Are you sure you want to delete your task without completing it?
-            </Text>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button colorScheme="red" color="white" onClick={handleConfirmDelete}>
-              Delete Task
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <TaskModal
+        isOpen={isOpen}
+        onClose={onClose}
+        onConfirmDelete={handleConfirmDelete}
+      />
     </>
   );
 }

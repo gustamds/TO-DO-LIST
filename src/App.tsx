@@ -1,9 +1,8 @@
-import { Home } from './screens/Home';
-import { ToastContainer } from 'react-toastify';
+import { Home } from "./screens/Home";
+import { ToastContainer } from "react-toastify";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
-const theme = extendTheme({
-});
+const theme = extendTheme({});
 
 function App() {
   return (

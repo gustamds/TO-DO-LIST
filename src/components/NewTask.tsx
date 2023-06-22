@@ -7,7 +7,7 @@ import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 interface Task {
   id: string;
   name: string;
-  checked: boolean; // Incluída a propriedade 'checked'
+  checked: boolean;
 }
 
 interface NewTaskProps {
